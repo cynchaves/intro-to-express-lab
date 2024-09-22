@@ -58,22 +58,26 @@ const shoes = [
 app.get('/shoes', (req, res) => {
     const types = shoes.filter((shoe) => {
         return shoe.type === req.query.type;
-    })
-    // const minPrice = shoes.filter((shoe) => {
-    //     return shoe.price >= req.query.min-price;
-    // })
-    // const maxPrice = shoes.filter((shoe) => {
-    //     return shoe.price <= req.query.max-price;
-    // })
-    if (req.query.type === req.query.type) {
+    });
+    const minPrice = shoes.filter((shoe) => {
+      if (typeof shoe.price === 'number') {
+        return shoe.price >= req.query.minprice;
+      };   
+    });
+  const maxPrice = shoes.filter((shoe) => {
+    if (typeof shoe.price === 'number') {
+      return shoe.price <= req.query.maxprice;
+      }
+    });
+    if (req.query.type) {
         res.send(types);
     }
-    // else if (req.query.min-price === req.query.min-price) {
-    //     res.send(minPrice)
-    // }
-    // else if (req.query.max-price >= req.query.max-price) {
-    //     res.send(maxPrice);
-    // }
+    if (req.query.minprice) {
+        res.send(minPrice);
+    }
+    if (req.query.maxprice) {
+        res.send(maxPrice);
+    }
     else {
         res.send(shoes);
     }
